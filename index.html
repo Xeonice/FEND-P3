@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Map UserVer</title>
+    <link href="src/CSS/style.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+    <!--     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
+    <script src="src/Javascript/script.js"></script>
+    <link rel="stylesheet" href="src/CSS/style2.css">
+</head>
+<body>
+    <header>
+    <span class="toggle-button">
+        <div class="menu-bar menu-bar-top"></div>
+        <div class="menu-bar menu-bar-middle"></div>
+        <div class="menu-bar menu-bar-bottom"></div>
+    </span>
+        <div class="menu-wrap">
+            <div class="menu-sidebar">
+                <h1>Google Map</h1>
+                <div class="search">
+                    <input>
+                    <span class="iconfont">&#xe6f1</span>
+                </div>
+                <ul class="menu">
+
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div id="mapView"></div>
+
+    <script src="src/Javascript/knockout-3.4.2.debug.js"></script>
+    <script src="src/Javascript/app.js"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChvfUfAfgvTUNrMoJUrRknjBn9I2ISAes&callback=initMap">
+    </script>
+</body>
+</html>
