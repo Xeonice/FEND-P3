@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="377fa69f-d690-4ff2-b277-b9143ea9c2f6" name="Default" comment="注释，文档升级">
+    <list default="true" id="377fa69f-d690-4ff2-b277-b9143ea9c2f6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Javascript/app.js" afterPath="$PROJECT_DIR$/src/Javascript/app.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -274,7 +273,7 @@
       <workItem from="1504619385107" duration="12045000" />
       <workItem from="1505044544619" duration="495000" />
       <workItem from="1505123457265" duration="5801000" />
-      <workItem from="1505188862513" duration="8109000" />
+      <workItem from="1505188862513" duration="8120000" />
     </task>
     <task id="LOCAL-00001" summary="P3 Complete,等待验收">
       <created>1505216295067</created>
@@ -297,11 +296,18 @@
       <option name="project" value="LOCAL" />
       <updated>1505216880157</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="注释，文档升级">
+      <created>1505218825815</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1505218825815</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40781000" />
+    <option name="totallyTimeSpent" value="40792000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -370,7 +376,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="P3 Complete,等待验收" />
     <MESSAGE value="Wiki TimeOut添加" />
-    <option name="LAST_COMMIT_MESSAGE" value="Wiki TimeOut添加" />
+    <MESSAGE value="注释，文档升级" />
+    <option name="LAST_COMMIT_MESSAGE" value="注释，文档升级" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
