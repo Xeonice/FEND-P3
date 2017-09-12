@@ -63,6 +63,9 @@ function createMarker(place) {
         map: map,
         position: place.geometry.location
     });
+    var wikiRequestTimeOut = setTimeout(function (e) {
+        $wikiElem.text("failed to load wiki.")
+    }, 8000);
 
     var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + place.name + '&format=json&callback=wikiCallback';
     $.ajax({                                                                               //ajax函数，由url与Setting组成
@@ -79,6 +82,7 @@ function createMarker(place) {
                 content: '<li><a href="' + url + '">' +
                 articleList + ' -wikiPedia'+ '</a></li>'
             });
+            clearTimeout(wikiRequestTimeOut);                                              //成功加载时，消去timeout信息，否则8s后timeout会自动显示
         }
     });
 
