@@ -5,9 +5,34 @@
 var map;
 var infowindow;
 var wikiElm = [];
+var DataArray;
+
+var viewModel = {
+    dataArray: ko.observableArray(),
+    inputData: ko.observable('A'),
+    inputTrack: function() {
+        for (i = 0; i < DataArray.length; i++){
+            var name = DataArray[i].name;
+            var selecter = ".list-" + i;
+            if (name.indexOf(this.inputData._latestValue) != -1){
+                $(selecter).css("display","inherit");
+            } else {
+                $(selecter).css("display","none");
+            }
+        }
+    }
+};
+viewModel.dataArray.subscribe(function(newValue) {
+    for (i = 0; i < newValue.length; i++){
+        $(".menu").append("<li class='list-" + i +"'>" + newValue[i].name + "</li>");
+    }
+    DataArray = newValue;
+});
+
+
 
 function initMap() {
-    var pyrmont = {lat: -33.867, lng: 151.195};
+    var pyrmont = {lat: 40.731, lng: -73.997};
 
     map = new google.maps.Map(document.getElementById('mapView'), {
         center: pyrmont,
@@ -16,16 +41,17 @@ function initMap() {
 
     infowindow = new google.maps.InfoWindow();
     var service = new google.maps.places.PlacesService(map);
-    service.nearbySearch({
+    var request = {
         location: pyrmont,
         radius: 500,
         type: ['store']
-    }, callback);
-
+    };
+    service.nearbySearch(request, callback);
 }
 
 function callback(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
+        viewModel.dataArray(results);
         for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
         }
@@ -33,7 +59,6 @@ function callback(results, status) {
 }
 
 function createMarker(place) {
-    var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({
         map: map,
         position: place.geometry.location
@@ -67,5 +92,7 @@ function createMarker(place) {
         }
         infowindow.setContent(place.name + wikiClickUrl);
         infowindow.open(map, this);
+
     });
 }
+ko.applyBindings(viewModel);
