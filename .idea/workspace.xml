@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="377fa69f-d690-4ff2-b277-b9143ea9c2f6" name="Default" comment="P3 Complete,等待验收">
+    <list default="true" id="377fa69f-d690-4ff2-b277-b9143ea9c2f6" name="Default" comment="注释，文档升级">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CSS/style.css" afterPath="$PROJECT_DIR$/src/CSS/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Javascript/app.js" afterPath="$PROJECT_DIR$/src/Javascript/app.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -42,8 +40,8 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Javascript/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="16" column="16" lean-forward="false" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
+            <state relative-caret-position="66">
+              <caret line="25" column="19" lean-forward="true" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -101,6 +99,19 @@
         <entry file="mock://chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/adblock-uiscripts-rightclick_hook.js">
           <provider selected="true" editor-type-id="vmFileEditor">
             <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Desktop/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="0">
+                <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
           </provider>
         </entry>
       </file>
@@ -263,7 +274,7 @@
       <workItem from="1504619385107" duration="12045000" />
       <workItem from="1505044544619" duration="495000" />
       <workItem from="1505123457265" duration="5801000" />
-      <workItem from="1505188862513" duration="6094000" />
+      <workItem from="1505188862513" duration="8109000" />
     </task>
     <task id="LOCAL-00001" summary="P3 Complete,等待验收">
       <created>1505216295067</created>
@@ -272,11 +283,25 @@
       <option name="project" value="LOCAL" />
       <updated>1505216295067</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="P3 Complete,等待验收">
+      <created>1505216360406</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1505216360406</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Wiki TimeOut添加">
+      <created>1505216880157</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1505216880157</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38766000" />
+    <option name="totallyTimeSpent" value="40781000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -344,19 +369,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="P3 Complete,等待验收" />
-    <option name="LAST_COMMIT_MESSAGE" value="P3 Complete,等待验收" />
+    <MESSAGE value="Wiki TimeOut添加" />
+    <option name="LAST_COMMIT_MESSAGE" value="Wiki TimeOut添加" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/Javascript/app.js</url>
-          <line>13</line>
-          <properties />
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="20" />
+      <option name="time" value="21" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -530,16 +548,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Javascript/knockout-3.4.2.debug.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="4256" column="24" lean-forward="false" selection-start-line="4256" selection-start-column="24" selection-end-line="4256" selection-end-column="24" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWzs3Lf4x3yimO0CoQYTT_CKxsjoHHsp8&amp;libraries=places&amp;callback=initMap">
       <provider selected="true" editor-type-id="httpFileEditor">
         <state />
@@ -574,10 +582,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Desktop/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Javascript/knockout-3.4.2.debug.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="4256" column="24" lean-forward="false" selection-start-line="4256" selection-start-column="24" selection-end-line="4256" selection-end-column="24" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Javascript/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="16" column="16" lean-forward="false" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
+        <state relative-caret-position="66">
+          <caret line="25" column="19" lean-forward="true" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

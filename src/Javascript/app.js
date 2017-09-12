@@ -23,6 +23,7 @@ var viewModel = {
     }
 };
 viewModel.dataArray.subscribe(function(newValue) {
+    //获取抓取的值，并对其做处理
     for (i = 0; i < newValue.length; i++){
         $(".menu").append("<li class='list-" + i +"'>" + newValue[i].name + "</li>");
     }
@@ -51,7 +52,7 @@ function initMap() {
 
 function callback(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-        viewModel.dataArray(results);
+        viewModel.dataArray(results);   //抓取result，并赋值给result
         for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
         }
