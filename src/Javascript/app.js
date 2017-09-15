@@ -5,29 +5,19 @@
 var map;
 var infowindow;
 var wikiElm = [];
-var DataArray;
+// var DataArray;
 
 var viewModel = {
-    dataArray: ko.observableArray(),
+    trackArray: ko.observableArray(),
     inputData: ko.observable('A'),
-    inputTrack: function() {
-        for (i = 0; i < DataArray.length; i++){
-            var name = DataArray[i].name;
-            var selecter = ".list-" + i;
-            if (name.indexOf(this.inputData._latestValue) != -1){
-                $(selecter).css("display","inherit");
-            } else {
-                $(selecter).css("display","none");
-            }
-        }
-    }
+    dataArray: ko.observableArray([])
 };
-viewModel.dataArray.subscribe(function(newValue) {
+viewModel.trackArray.subscribe(function(newValue) {
     //获取抓取的值，并对其做处理
-    for (i = 0; i < newValue.length; i++){
-        $(".menu").append("<li class='list-" + i +"'>" + newValue[i].name + "</li>");
+    for (var i = 0; i < newValue.length; i++){
+        viewModel.dataArray.push(newValue[i]);
     }
-    DataArray = newValue;
+    // DataArray = newValue;
 });
 
 
@@ -52,7 +42,7 @@ function initMap() {
 
 function callback(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-        viewModel.dataArray(results);   //抓取result，并赋值给result
+        viewModel.trackArray(results);   //抓取result，并赋值给result
         for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
         }
@@ -62,10 +52,11 @@ function callback(results, status) {
 function createMarker(place) {
     var marker = new google.maps.Marker({
         map: map,
-        position: place.geometry.location
+        position: place.geometry.location,
+        animation: google.maps.Animation.DROP
     });
     var wikiRequestTimeOut = setTimeout(function (e) {
-        $wikiElem.text("failed to load wiki.")
+        $wikiElem.text("failed to load wiki.");
     }, 8000);
 
     var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + place.name + '&format=json&callback=wikiCallback';
