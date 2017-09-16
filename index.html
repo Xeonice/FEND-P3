@@ -26,10 +26,10 @@
                 <h1>Google Map</h1>
                 <div class="search">
                     <input  data-bind="value: inputData">
-                    <span class="iconfont" data-bind="click: searchFunc">&#xe6f1</span>
+                    <span class="iconfont">&#xe6f1</span>
                 </div>
-                <ul class="menu" data-bind="foreach: backUpArray">
-                    <li data-bind="text: name, click: $root.clickList, visiable: boolenArray"></li>
+                <ul class="menu" data-bind="foreach: filteredNames">
+                    <li data-bind="text: name, click: $root.clickList"></li>
                 </ul>
             </div>
         </div>

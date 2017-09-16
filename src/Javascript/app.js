@@ -6,41 +6,30 @@ var map;
 var infowindow;
 var wikiElm = [];
 var markers = [];
+var backUpCrray = ko.observableArray();
 // var DataArray;
 
-var viewModel = {
-    self: this,
-    backUpArray: ko.observableArray(),
-    inputData: ko.observable('A'),
-    bollenArray: [],
-    clickList: function (point) {
+var viewModel = function(){
+    var self = this;
+    self.inputData = ko.observable('A');
+    self.filteredNames = ko.computed(function() {
+        if (!self.inputData()) {
+            return backUpCrray;
+        } else {
+            return backUpCrray().filter(function(name) {
+                return (function(){name.toLowerCase().indexOf(self.inputData().toLowerCase()) != -1});;
+            });
+        }
+    });
+    self.clickList = function (point) {
         for (var i = 0; i < markers.length; i++) {
             if (point.geometry.location == markers[i].position) {
-                console.log('Yes' + markers[i].position + point.name);
+                // console.log('Yes' + markers[i].position + point.name);
                 google.maps.event.trigger(markers[i], 'click', {});
             }
         }
-    },
-
-    searchFunc: function () {
-        console.log(this.backUpArray());
-        var inputDataSearch = this.inputData().toLowerCase();
-        for (var i = 0; i < this.backUpArray().length; i++){
-            var trackArraySearch = this.backUpArray()[i].name.toLowerCase();
-            if(trackArraySearch.indexOf(inputDataSearch) == -1){
-                this.bollenArray[i] = false;
-                console.log(trackArraySearch);
-                markers[i].setVisible(false);
-            }else{
-                this.bollenArray[i] = true;
-            }
-        }
-    }
+    };
 };
-viewModel.backUpArray.subscribe(function () {
-
-});
-
 
 function initMap() {
     var pyrmont = {lat: 40.731, lng: -73.997};
@@ -62,7 +51,7 @@ function initMap() {
 
 function callback(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-        viewModel.backUpArray(results);   //抓取result，并赋值给result
+        backUpCrray().push(results)  //抓取result，并赋值给result
         for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
         }
@@ -80,11 +69,10 @@ function createMarker(place) {
 
     inputMarker.addListener('click', toggleBounce);
     function toggleBounce() {
-        if (inputMarker.getAnimation() !== null) {
+        inputMarker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function(){
             inputMarker.setAnimation(null);
-        } else {
-            inputMarker.setAnimation(google.maps.Animation.BOUNCE);
-        }
+        }, 1500);
     }
 
 
@@ -104,7 +92,6 @@ function createMarker(place) {
                 content: '<li><a href="' + url + '">' +
                 articleList + ' -wikiPedia'+ '</a></li>'
             });
-            clearTimeout(wikiRequestTimeOut);                                              //成功加载时，消去timeout信息，否则8s后timeout会自动显示
         },
         timeout: 4000,
         error: function(){
@@ -125,4 +112,4 @@ function createMarker(place) {
         infowindow.open(map, this);
     });
 }
-ko.applyBindings(viewModel);
+ko.applyBindings(new viewModel());
