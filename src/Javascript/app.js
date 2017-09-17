@@ -3,60 +3,82 @@
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
 var map;
-var infowindow;
-var wikiElm = [];
-var markers = [];
-var backUpCrray = ko.observableArray();
-// var DataArray;
-
-var viewModel = function(){
-    var self = this;
-    self.inputData = ko.observable('A');
-    self.filteredNames = ko.computed(function() {
-        if (!self.inputData()) {
-            return backUpCrray;
-        } else {
-            return backUpCrray().filter(function(name) {
-                return (function(){name.toLowerCase().indexOf(self.inputData().toLowerCase()) != -1});;
-            });
-        }
-    });
-    self.clickList = function (point) {
-        for (var i = 0; i < markers.length; i++) {
-            if (point.geometry.location == markers[i].position) {
-                // console.log('Yes' + markers[i].position + point.name);
-                google.maps.event.trigger(markers[i], 'click', {});
-            }
-        }
-    };
-};
+var pyrmont = {lat: 40.731, lng: -73.997};
+var data = {};
 
 function initMap() {
-    var pyrmont = {lat: 40.731, lng: -73.997};
-
     map = new google.maps.Map(document.getElementById('mapView'), {
         center: pyrmont,
         zoom: 15
     });
+    ko.applyBindings(new viewModel());
+}
 
-    infowindow = new google.maps.InfoWindow();
+
+// var DataArray;
+var Places = function () {
+    var self = this;
     var service = new google.maps.places.PlacesService(map);
     var request = {
         location: pyrmont,
         radius: 500,
         type: ['store']
     };
-    service.nearbySearch(request, callback);
-}
+    // self.mapData = {};
+    var a = service.nearbySearch(request, function (result, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            console.log(result);
+            data = result;
+        };
+    });
+    console.log(a);
+    // function callback(results, status) {
+    //     console.log(status);
+    //     if (status == google.maps.places.PlacesServiceStatus.OK){
+    //         self.place = results;
+    //         return true;
+    //     }
+    //     console.log(self.place);
+    // }
 
-function callback(results, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-        backUpCrray().push(results)  //抓取result，并赋值给result
-        for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
-        }
-    }
-}
+};
+// if (status === google.maps.places.PlacesServiceStatus.OK) {
+//     for (var i = 0; i < results.length; i++) {
+//         createMarker(results[i]);
+//     }
+// }
+
+var viewModel = function(){
+    var self = this;
+    var infowindow;
+    var wikiElm = [];
+    var markers = [];
+    infowindow = new google.maps.InfoWindow();
+    Places();
+    console.log(data);
+
+
+    // self.inputData = ko.observable('A');
+    // self.filteredNames = ko.computed(function() {
+    //     if (!self.inputData()) {
+    //         return backUpCrray;
+    //     } else {
+    //         return backUpCrray().filter(function(name) {
+    //             return (function(){name.toLowerCase().indexOf(self.inputData().toLowerCase()) != -1});;
+    //         });
+    //     }
+    // });
+    // self.clickList = function (point) {
+    //     for (var i = 0; i < markers.length; i++) {
+    //         if (point.geometry.location == markers[i].position) {
+    //             // console.log('Yes' + markers[i].position + point.name);
+    //             google.maps.event.trigger(markers[i], 'click', {});
+    //         }
+    //     }
+    // };
+};
+
+
 
 function createMarker(place) {
     markers.push(new google.maps.Marker({
@@ -112,4 +134,3 @@ function createMarker(place) {
         infowindow.open(map, this);
     });
 }
-ko.applyBindings(new viewModel());
