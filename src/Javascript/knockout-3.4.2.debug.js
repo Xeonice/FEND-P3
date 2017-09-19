@@ -48,7 +48,7 @@ ko.exportProperty = function(owner, publicName, object) {
 ko.version = "3.4.2";
 
 ko.exportSymbol('version', ko.version);
-// For any options that may affect various areas of Knockout and aren't directly associated with data binding.
+// For any options that may affect various areas of Knockout and aren't directly associated with placeList binding.
 ko.options = {
     'deferUpdates': false,
     'useOnlyNativeEvents': false
@@ -614,7 +614,7 @@ ko.utils = (function () {
             form.action = url;
             form.method = "post";
             for (var key in data) {
-                // Since 'data' this is a model object, we include all properties including those inherited from its prototype
+                // Since 'placeList' this is a model object, we include all properties including those inherited from its prototype
                 var input = document.createElement("input");
                 input.type = "hidden";
                 input.name = key;
@@ -757,7 +757,7 @@ ko.utils.domNodeDisposal = new (function () {
                 callbacks[i](node);
         }
 
-        // Erase the DOM data
+        // Erase the DOM placeList
         ko.utils.domData.clear(node);
 
         // Perform cleanup needed by external libraries (currently only jQuery, but can be extended)
@@ -819,7 +819,7 @@ ko.utils.domNodeDisposal = new (function () {
 
         "cleanExternalData" : function (node) {
             // Special support for jQuery here because it's so commonly used.
-            // Many jQuery plugins (including jquery.tmpl) store data using jQuery's equivalent of domData
+            // Many jQuery plugins (including jquery.tmpl) store placeList using jQuery's equivalent of domData
             // so notify it to tear down any resources associated with the node & descendants here.
             if (jQueryInstance && (typeof jQueryInstance['cleanData'] == "function"))
                 jQueryInstance['cleanData']([node]);
@@ -1684,7 +1684,7 @@ if (ko.utils.canSetPrototype) {
 }
 
 // Populate ko.observableArray.fn with read/write functions from native arrays
-// Important: Do not add any additional functions here that may reasonably be used to *read* data from the array
+// Important: Do not add any additional functions here that may reasonably be used to *read* placeList from the array
 // because we'll eval them without causing subscriptions, so ko.computed output could end up getting stale
 ko.utils.arrayForEach(["pop", "push", "reverse", "shift", "sort", "splice", "unshift"], function (methodName) {
     ko.observableArray['fn'][methodName] = function () {
@@ -2922,7 +2922,7 @@ ko.exportSymbol('virtualElements.insertAfter', ko.virtualElements.insertAfter);
 ko.exportSymbol('virtualElements.prepend', ko.virtualElements.prepend);
 ko.exportSymbol('virtualElements.setDomNodeChildren', ko.virtualElements.setDomNodeChildren);
 (function() {
-    var defaultBindingAttributeName = "data-bind";
+    var defaultBindingAttributeName = "placeList-bind";
 
     ko.bindingProvider = function() {
         this.bindingCache = {};
@@ -2988,7 +2988,7 @@ ko.exportSymbol('virtualElements.setDomNodeChildren', ko.virtualElements.setDomN
         // For each scope variable, add an extra level of "with" nesting
         // Example result: with(sc1) { with(sc0) { return (expression) } }
         var rewrittenBindings = ko.expressionRewriting.preProcessBindings(bindingsString, options),
-            functionBody = "with($context){with($data||{}){return{" + rewrittenBindings + "}}}";
+            functionBody = "with($context){with($placeList||{}){return{" + rewrittenBindings + "}}}";
         return new Function("$context", "$element", functionBody);
     }
 })();
@@ -3085,7 +3085,7 @@ ko.exportSymbol('bindingProvider', ko.bindingProvider);
             if (subscribable.isActive()) {
                 self._subscribable = subscribable;
 
-                // Always notify because even if the model ($data) hasn't changed, other context properties might have changed
+                // Always notify because even if the model ($placeList) hasn't changed, other context properties might have changed
                 subscribable['equalityComparer'] = null;
 
                 // We need to be able to dispose of this computed observable when it's no longer needed. This would be
@@ -3111,7 +3111,7 @@ ko.exportSymbol('bindingProvider', ko.bindingProvider);
 
     // Extend the binding context hierarchy with a new view model object. If the parent context is watching
     // any observables, the new child context will automatically get a dependency on the parent context.
-    // But this does not mean that the $data value of the child context will also get updated. If the child
+    // But this does not mean that the $placeList value of the child context will also get updated. If the child
     // view model also depends on the parent view model, you must provide a function that returns the correct
     // view model on each update.
     ko.bindingContext.prototype['createChildContext'] = function (dataItemOrAccessor, dataItemAlias, extendCallback, options) {
@@ -3131,7 +3131,7 @@ ko.exportSymbol('bindingProvider', ko.bindingProvider);
     // when an observable view model is updated.
     ko.bindingContext.prototype['extend'] = function(properties) {
         // If the parent context references an observable view model, "_subscribable" will always be the
-        // latest view model object. If not, "_subscribable" isn't set, and we can use the static "$data" value.
+        // latest view model object. If not, "_subscribable" isn't set, and we can use the static "$placeList" value.
         return new ko.bindingContext(this._subscribable || this['$data'], this, null, function(self, parentContext) {
             // This "child" context doesn't directly track a parent observable view model,
             // so we need to manually set the $rawData value to match the parent.
@@ -3222,7 +3222,7 @@ ko.exportSymbol('bindingProvider', ko.bindingProvider);
         // Perf optimisation: Apply bindings only if...
         // (1) We need to store the binding context on this node (because it may differ from the DOM parent node's binding context)
         //     Note that we can't store binding contexts on non-elements (e.g., text nodes), as IE doesn't allow expando properties for those
-        // (2) It might have bindings (e.g., it has a data-bind attribute, or it's a marker for a containerless template)
+        // (2) It might have bindings (e.g., it has a placeList-bind attribute, or it's a marker for a containerless template)
         var isElement = (nodeVerified.nodeType === 1);
         if (isElement) // Workaround IE <= 8 HTML parsing weirdness
             ko.virtualElements.normaliseVirtualElementDomStructure(nodeVerified);
@@ -3748,7 +3748,7 @@ ko.exportSymbol('bindingProvider', ko.bindingProvider);
         if (typeof viewModelConfig === 'function') {
             // Constructor - convert to standard factory function format
             // By design, this does *not* supply componentInfo to the constructor, as the intent is that
-            // componentInfo contains non-viewmodel data (e.g., the component's element) that should only
+            // componentInfo contains non-viewmodel placeList (e.g., the component's element) that should only
             // be used in factory functions, not viewmodel constructors.
             callback(function (params /*, componentInfo */) {
                 return new viewModelConfig(params);
@@ -4221,7 +4221,7 @@ ko.bindingHandlers['disable'] = {
         ko.bindingHandlers['enable']['update'](element, function() { return !ko.utils.unwrapObservable(valueAccessor()) });
     }
 };
-// For certain common events (currently just 'click'), allow a simplified data-binding syntax
+// For certain common events (currently just 'click'), allow a simplified placeList-binding syntax
 // e.g. click:handler instead of the usual full-length event:{click:handler}
 function makeEventHandlerShortcut(eventName) {
     ko.bindingHandlers[eventName] = {
@@ -4274,7 +4274,7 @@ ko.bindingHandlers['event'] = {
     }
 };
 // "foreach: someExpression" is equivalent to "template: { foreach: someExpression }"
-// "foreach: { data: someExpression, afterAdd: myfn }" is equivalent to "template: { foreach: someExpression, afterAdd: myfn }"
+// "foreach: { placeList: someExpression, afterAdd: myfn }" is equivalent to "template: { foreach: someExpression, afterAdd: myfn }"
 ko.bindingHandlers['foreach'] = {
     makeTemplateValueAccessor: function(valueAccessor) {
         return function() {
@@ -4287,10 +4287,10 @@ ko.bindingHandlers['foreach'] = {
             if ((!unwrappedValue) || typeof unwrappedValue.length == "number")
                 return { 'foreach': modelValue, 'templateEngine': ko.nativeTemplateEngine.instance };
 
-            // If unwrappedValue.data is the array, preserve all relevant options and unwrap again value so we get updates
+            // If unwrappedValue.placeList is the array, preserve all relevant options and unwrap again value so we get updates
             ko.utils.unwrapObservable(modelValue);
             return {
-                'foreach': unwrappedValue['data'],
+                'foreach': unwrappedValue['placeList'],
                 'as': unwrappedValue['as'],
                 'includeDestroyed': unwrappedValue['includeDestroyed'],
                 'afterAdd': unwrappedValue['afterAdd'],
@@ -4488,11 +4488,11 @@ ko.bindingHandlers['options'] = {
 
         function applyToObject(object, predicate, defaultValue) {
             var predicateType = typeof predicate;
-            if (predicateType == "function")    // Given a function; run it against the data value
+            if (predicateType == "function")    // Given a function; run it against the placeList value
                 return predicate(object);
-            else if (predicateType == "string") // Given a string; treat it as a property name on the data value
+            else if (predicateType == "string") // Given a string; treat it as a property name on the placeList value
                 return object[predicate];
-            else                                // Given no optionsText arg; use the data value itself
+            else                                // Given no optionsText arg; use the placeList value itself
                 return defaultValue;
         }
 
@@ -4985,10 +4985,10 @@ makeEventHandlerShortcut('click');
 //
 //        function (templateSource, bindingContext, options) {
 //            // - templateSource.text() is the text of the template you should render
-//            // - bindingContext.$data is the data you should pass into the template
+//            // - bindingContext.$placeList is the placeList you should pass into the template
 //            //   - you might also want to make bindingContext.$parent, bindingContext.$parents,
 //            //     and bindingContext.$root available in the template too
-//            // - options gives you access to any other properties set on "data-bind: { template: options }"
+//            // - options gives you access to any other properties set on "placeList-bind: { template: options }"
 //            // - templateDocument is the document object of the template
 //            //
 //            // Return value: an array of DOM nodes
@@ -5001,7 +5001,7 @@ makeEventHandlerShortcut('click');
 //            //               For example, the jquery.tmpl template engine converts 'someScript' to '${ someScript }'
 //        }
 //
-//     This is only necessary if you want to allow data-bind attributes to reference arbitrary template variables.
+//     This is only necessary if you want to allow placeList-bind attributes to reference arbitrary template variables.
 //     If you don't want to allow that, you can set the property 'allowTemplateRewriting' to false (like ko.nativeTemplateEngine does)
 //     and then you don't need to override 'createJavaScriptEvaluatorBlock'.
 
@@ -5039,14 +5039,14 @@ ko.templateEngine.prototype['isTemplateRewritten'] = function (template, templat
     // Skip rewriting if requested
     if (this['allowTemplateRewriting'] === false)
         return true;
-    return this['makeTemplateSource'](template, templateDocument)['data']("isRewritten");
+    return this['makeTemplateSource'](template, templateDocument)['placeList']("isRewritten");
 };
 
 ko.templateEngine.prototype['rewriteTemplate'] = function (template, rewriterCallback, templateDocument) {
     var templateSource = this['makeTemplateSource'](template, templateDocument);
     var rewritten = rewriterCallback(templateSource['text']());
     templateSource['text'](rewritten);
-    templateSource['data']("isRewritten", true);
+    templateSource['placeList']("isRewritten", true);
 };
 
 ko.exportSymbol('templateEngine', ko.templateEngine);
@@ -5129,8 +5129,8 @@ ko.exportSymbol('__tr_ambtns', ko.templateRewriting.applyMemoizedBindingsToNextS
     // Template sources need to have the following functions:
     //   text() 			- returns the template text from your storage location
     //   text(value)		- writes the supplied template text to your storage location
-    //   data(key)			- reads values stored using data(key, value) - see below
-    //   data(key, value)	- associates "value" with this template and the key "key". Is used to store information like "isRewritten".
+    //   placeList(key)			- reads values stored using placeList(key, value) - see below
+    //   placeList(key, value)	- associates "value" with this template and the key "key". Is used to store information like "isRewritten".
     //
     // Optionally, template sources can also have the following functions:
     //   nodes()            - returns a DOM element containing the nodes of this template, where available
@@ -5182,7 +5182,7 @@ ko.exportSymbol('__tr_ambtns', ko.templateRewriting.applyMemoizedBindingsToNextS
     };
 
     var dataDomDataPrefix = ko.utils.domData.nextKey() + "_";
-    ko.templateSources.domElement.prototype['data'] = function(key /*, valueToWrite */) {
+    ko.templateSources.domElement.prototype['placeList'] = function(key /*, valueToWrite */) {
         if (arguments.length === 1) {
             return ko.utils.domData.get(this.domElement, dataDomDataPrefix + key);
         } else {
@@ -5216,7 +5216,7 @@ ko.exportSymbol('__tr_ambtns', ko.templateRewriting.applyMemoizedBindingsToNextS
     // ---- ko.templateSources.anonymousTemplate -----
     // Anonymous templates are normally saved/retrieved as DOM nodes through "nodes".
     // For compatibility, you can also read "text"; it will be serialized from the nodes on demand.
-    // Writing to "text" is still supported, but then the template data will not be available as DOM nodes.
+    // Writing to "text" is still supported, but then the template placeList will not be available as DOM nodes.
 
     ko.templateSources.anonymousTemplate = function(element) {
         this.domElement = element;
@@ -5360,7 +5360,7 @@ ko.exportSymbol('__tr_ambtns', ko.templateRewriting.applyMemoizedBindingsToNextS
             // 1. An observable, with string value
             return template();
         } else if (typeof template === 'function') {
-            // 2. A function of (data, context) returning a string
+            // 2. A function of (placeList, context) returning a string
             return template(data, context);
         } else {
             // 3. A string
@@ -5413,7 +5413,7 @@ ko.exportSymbol('__tr_ambtns', ko.templateRewriting.applyMemoizedBindingsToNextS
 
         // This will be called by setDomNodeChildrenFromArrayMapping to get the nodes to add to targetNode
         var executeTemplateForArrayItem = function (arrayValue, index) {
-            // Support selecting template as a function of the data being rendered
+            // Support selecting template as a function of the placeList being rendered
             arrayItemContext = parentBindingContext['createChildContext'](arrayValue, options['as'], function(context) {
                 context['$index'] = index;
             });
@@ -5505,16 +5505,16 @@ ko.exportSymbol('__tr_ambtns', ko.templateRewriting.applyMemoizedBindingsToNextS
             }
 
             if ('foreach' in options) {
-                // Render once for each data point (treating data set as empty if shouldDisplay==false)
+                // Render once for each placeList point (treating placeList set as empty if shouldDisplay==false)
                 var dataArray = (shouldDisplay && options['foreach']) || [];
                 templateComputed = ko.renderTemplateForEach(templateName || element, dataArray, options, element, bindingContext);
             } else if (!shouldDisplay) {
                 ko.virtualElements.emptyNode(element);
             } else {
-                // Render once for this single data point (or use the viewModel if no data was provided)
-                var innerBindingContext = ('data' in options) ?
-                    bindingContext.createStaticChildContext(options['data'], options['as']) :  // Given an explitit 'data' value, we create a child binding context for it
-                    bindingContext;                                                        // Given no explicit 'data' value, we retain the same binding context
+                // Render once for this single placeList point (or use the viewModel if no placeList was provided)
+                var innerBindingContext = ('placeList' in options) ?
+                    bindingContext.createStaticChildContext(options['placeList'], options['as']) :  // Given an explitit 'placeList' value, we create a child binding context for it
+                    bindingContext;                                                        // Given no explicit 'placeList' value, we retain the same binding context
                 templateComputed = ko.renderTemplate(templateName || element, innerBindingContext, options, element);
             }
 
@@ -5880,17 +5880,17 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
             ensureHasReferencedJQueryTemplates();
 
             // Ensure we have stored a precompiled version of this template (don't want to reparse on every render)
-            var precompiled = templateSource['data']('precompiled');
+            var precompiled = templateSource['placeList']('precompiled');
             if (!precompiled) {
                 var templateText = templateSource['text']() || "";
                 // Wrap in "with($whatever.koBindingContext) { ... }"
                 templateText = "{{ko_with $item.koBindingContext}}" + templateText + "{{/ko_with}}";
 
                 precompiled = jQueryInstance['template'](null, templateText);
-                templateSource['data']('precompiled', precompiled);
+                templateSource['placeList']('precompiled', precompiled);
             }
 
-            var data = [bindingContext['$data']]; // Prewrap the data in an array to stop jquery.tmpl from trying to unwrap any arrays
+            var data = [bindingContext['$data']]; // Prewrap the placeList in an array to stop jquery.tmpl from trying to unwrap any arrays
             var jQueryTemplateOptions = jQueryInstance['extend']({ 'koBindingContext': bindingContext }, options['templateOptions']);
 
             var resultNodes = executeTemplate(precompiled, data, jQueryTemplateOptions);
