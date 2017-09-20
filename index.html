@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,38 +6,41 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Map UserVer</title>
+    <script src="src/Javascript/jquery-3.1.1.min.js"></script>
     <link href="src/CSS/style.css" type="text/css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
     <!--     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
-    <!--<script src="src/Javascript/script.js"></script>-->
-    <!--<link rel="stylesheet" href="src/CSS/style2.css">-->
-
+    <script src="src/Javascript/script.js"></script>
+    <link rel="stylesheet" href="src/CSS/style2.css">
 </head>
 <body>
     <div class="page">
-        <div class="page__info">
-
-            <h1 class="info__title">Store</h1>
-
-            <div class="info__search">
-                <label class="search__label" for="search">Search</label>
-                <input id="search" class="search__input" type="search" name="search" placeholder="search" data-bind="value: locationInput, valueUpdate: 'keyup'">
+        <header>
+             <span class="toggle-button">
+                <div class="menu-bar menu-bar-top"></div>
+                <div class="menu-bar menu-bar-middle"></div>
+                <div class="menu-bar menu-bar-bottom"></div>
+            </span>
+            <div class="menu-wrap">
+                <div class="menu-sidebar">
+                    <h1>Google Map</h1>
+                    <div class="search">
+                        <input data-bind="value: locationInput, valueUpdate: 'keyup'">
+                        <span class="iconfont">&#xe6f1</span>
+                    </div>
+                    <ul class="menu" data-bind="foreach: listFilter">
+                        <li data-bind="text: name, click: $parent.locationClicked"></li>
+                    </ul>
+                </div>
             </div>
-
-            <ul class="info__location" data-bind="foreach: listFilter">
-                <li data-bind="text: name, click: $parent.locationClicked"></li>
-            </ul>
-        </div>
+        </header>
 
         <div id="mapView" class="page__map"></div>
     </div>
 
-    <script src="src/Javascript/knockout-3.4.2.debug.js"></script>
-    <script src="src/Javascript/jquery-3.1.1.min.js"></script>
+    <script src="src/Javascript/knockout-3.4.1.js"></script>
     <script src="src/Javascript/app.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAWzs3Lf4x3yimO0CoQYTT_CKxsjoHHsp8&v=3&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyApmoY54_QVp80zMhBn6K9phNui_6SbpL0&v=3&callback=initMap" onerror="googlemapError()">
     </script>
-
 </body>
 </html>

@@ -39,7 +39,8 @@ var ViewModel = function(){
     self.a = ko.observable('A');
     self.locations = ko.observableArray();
     self.filter = ko.observableArray(self.locations());
-    self.locationInput = ko.observable('A');
+    self.locationInput = ko.observable('');
+    self.errorMessage = ko.observable('');
     var infowindow = new google.maps.InfoWindow();
 
     placeList.forEach(function (data) {
