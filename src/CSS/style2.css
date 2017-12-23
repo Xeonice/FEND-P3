@@ -69,6 +69,8 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	width: 20rem;
+	padding-top: 18rem;
+	padding-bottom: 3rem;
 }
 .search{
 	display: flex;

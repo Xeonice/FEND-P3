@@ -7,6 +7,7 @@ var pyrmont = {lat: 40.731, lng: -73.997};
 var placeList;
 var markers = [];
 var wikiElm = [];
+var initStatus;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('mapView'), {
@@ -14,6 +15,7 @@ function initMap() {
         zoom: 15
     });
     var self = this;
+    var a = 'a';
     var service = new google.maps.places.PlacesService(map);
     var request = {
         location: pyrmont,
@@ -21,6 +23,7 @@ function initMap() {
         type: ['store']
     };
     service.nearbySearch(request, function (result, status) {
+        initStatus = status;
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             placeList = result;
             ko.applyBindings(new ViewModel());
