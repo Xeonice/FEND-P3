@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
     <script src="src/Javascript/script.js"></script>
     <link rel="stylesheet" href="src/CSS/style2.css">
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.8.0/jasmine_favicon.png">
     <link rel="stylesheet" href="lib/jasmine-2.8.0/jasmine.css">
@@ -35,16 +36,22 @@
                     <h1>Google Map</h1>
 
                     <div id="request-add">
-                        <input v-model="location" placeholder="edit me">
-                        <input v-model="type" placeholder="edit me">
-                        <button v-on:click="getData">Serach</button>
+                        <form class="form-wrapper cf" v-on:submit.prevent>
+                            <input v-model="location" type="text" placeholder="Search here..." required>
+                            <input v-model="type" type="text" placeholder="Search here..." required>
+                            <button type="submit" v-on:click="getData">Search</button>
+                        </form>
                     </div>
                     <div id="mapData-present">
-                        <ul>
-                            <li v-for="value in elements" track-by="$index">
-                                <p v-on:click="clicked(value)">{{value}}</p>
-                            </li>
-                        </ul>
+                        <transition name="slide-fade">
+                            <ul class="form-wrapper" v-if="inputStatus">
+                                <transition-group name="list" tag="p">
+                                    <li v-for="(value,index) in elements" v-bind:key="value" class="listView">
+                                        <p v-on:click="clicked(index)">{{value}}</p>
+                                    </li>
+                                </transition-group>
+                            </ul>
+                        </transition>
                     </div>
                 </div>
             </div>

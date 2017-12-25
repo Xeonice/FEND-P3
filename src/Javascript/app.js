@@ -32,7 +32,18 @@ function initMap() {
         el: "#mapData-present",
         data: {
             elements: [],
-            filter: ''
+            filter: '',
+            inputStatus: false
+        },
+        methods: {
+            clicked: function (index) {
+                for (var i = 0; i < clickStatus.length; i++) {
+                    if (index === i) {
+                        google.maps.event.trigger(clickStatus[i], 'click');
+                        break;
+                    }
+                }
+            }
         }
     });
 
@@ -44,6 +55,7 @@ function initMap() {
         },
         methods: {
             getData: function () {
+                listview.elements = [];
                 inputLocation = this.location;
                 request.type.push(this.type);
                 geocodeAddress(geocoder, map);
@@ -53,10 +65,11 @@ function initMap() {
                             resultsMap.setCenter(results[0].geometry.location);
                             request.location = results[0].geometry.location;
                             service.nearbySearch(request, function (result, status) {
-                                initStatus = status;
+                                listview.initStatus = true;
                                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                                     var i = 0;
                                     result.forEach(function (element) {
+                                        listview.inputStatus = true;
                                         Vue.set(listview.elements, i, element.name);
                                         i++;
                                     })
@@ -107,14 +120,14 @@ var ViewModel = function(data){
         if(clickStatus.length == 20){
             function deleteMarkers() {
                 clearMarkers();
-                marker = [];
+                clickStatus = [];
             }
             function clearMarkers() {
                 setMapOnAll(null);
             }
             function setMapOnAll(map) {
-                for (var i = 0; i < markers.length; i++) {
-                    marker.setMap(map);
+                for (var i = 0; i < clickStatus.length; i++) {
+                    clickStatus[i].setMap(map);
                 }
             }
             deleteMarkers();
