@@ -8,6 +8,15 @@ var placeList;
 var markers = [];
 var wikiElm = [];
 var initStatus;
+var nameArray = [];
+var clickStatus = [];
+var request = {
+    radius: 500,
+    type: [],
+    location
+}
+var inputLocation = '';
+
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('mapView'), {
@@ -17,39 +26,102 @@ function initMap() {
     var self = this;
     var a = 'a';
     var service = new google.maps.places.PlacesService(map);
-    var request = {
-        location: pyrmont,
-        radius: 500,
-        type: ['store']
-    };
-    service.nearbySearch(request, function (result, status) {
-        initStatus = status;
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-            placeList = result;
-            ko.applyBindings(new ViewModel());
+    var geocoder = new google.maps.Geocoder();
+
+    var listview = new Vue({
+        el: "#mapData-present",
+        data: {
+            elements: [],
+            filter: ''
         }
     });
+
+    var requestMade = new Vue({
+        el: '#request-add',
+        data: {
+            location: 'pyrmont',
+            type: ''
+        },
+        methods: {
+            getData: function () {
+                inputLocation = this.location;
+                request.type.push(this.type);
+                geocodeAddress(geocoder, map);
+                function geocodeAddress(geocoder, resultsMap) {
+                    geocoder.geocode({ 'address': inputLocation }, function (results, status) {
+                        if (status === 'OK') {
+                            resultsMap.setCenter(results[0].geometry.location);
+                            request.location = results[0].geometry.location;
+                            service.nearbySearch(request, function (result, status) {
+                                initStatus = status;
+                                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                                    var i = 0;
+                                    result.forEach(function (element) {
+                                        Vue.set(listview.elements, i, element.name);
+                                        i++;
+                                    })
+                                    ViewModel(result);
+                                }
+                            });
+                        } else {
+                            alert('Geocode was not successful for the following reason: ' + status);
+                        }
+                    });
+                }
+            }
+        }
+    })
 }
 
-var Places = function(data) {
-    this.name = ko.observable(data.name);
-    this.mapError = ko.observable('');
-};
+// var Places = function(data) {
+//     this.name = ko.observable(data.name);
+//     this.mapError = ko.observable('');
+// };
 
 
-var ViewModel = function(){
-    var self = this;
-    self.a = ko.observable('A');
-    self.locations = ko.observableArray();
-    self.filter = ko.observableArray(self.locations());
-    self.locationInput = ko.observable('');
-    self.errorMessage = ko.observable('');
+var ViewModel = function(data){
+
+    // var mapMarkerPresent = new Vue({
+    //     el: "#mapData-present",
+    //     data: {
+    //         elements: [],
+    //         filter: ''
+    //     },
+    //     methods: {
+    //         clicked: function (input) {
+    //             for (var i = 0; i < clickStatus.length; i++) {
+    //                 if (clickStatus[i].title === input) {
+    //                     google.maps.event.trigger(clickStatus[i], 'click');
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // });
+
+    var i = 0;
     var infowindow = new google.maps.InfoWindow();
 
-    placeList.forEach(function (data) {
-        var location = new Places(data);
-        var position = data.geometry.location;
-        var title = data.name;
+
+    data.forEach(function (element) {
+        if(clickStatus.length == 20){
+            function deleteMarkers() {
+                clearMarkers();
+                marker = [];
+            }
+            function clearMarkers() {
+                setMapOnAll(null);
+            }
+            function setMapOnAll(map) {
+                for (var i = 0; i < markers.length; i++) {
+                    marker.setMap(map);
+                }
+            }
+            deleteMarkers();
+            clickStatus = [];
+        }
+        var position = element.geometry.location;
+        var title = element.name;
 
         var marker = (new google.maps.Marker({
             map: map,
@@ -58,12 +130,17 @@ var ViewModel = function(){
             animation: google.maps.Animation.DROP
         }));
 
+        // Vue.set(listview.elements, i, title);
+        // i++;
         marker.addListener('click', function () {
             populateInfoWindow(this, infowindow);
         });
-        location.marker = marker;
-        self.locations.push(location);
+        clickStatus.push(marker);
     });
+
+
+    // console.log(mapMarkerPresent.elements);
+
     function populateInfoWindow(marker, infowindow) {
         if(infowindow.marker != marker) {
             infowindow.marker = marker;
@@ -104,28 +181,18 @@ var ViewModel = function(){
             });
         }
     }
-    self.listFilter = ko.computed(function() {
-        return ko.utils.arrayFilter(self.filter(), function(location) {
-            if (location.name().toLowerCase().indexOf(self.locationInput().toLowerCase()) >= 0) {
-                location.marker.setVisible(true);
-                return true;
-            } else {
-                location.marker.setVisible(false);
-                return false;
-            }
-        });
-    });
-    console.log(self.listFilter());
+}
+//     console.log(self.listFilter());
     self.locationClicked = function(location) {
         google.maps.event.trigger(location.marker, 'click');
     };
 
-};
+// };
 
-function googlemapError() {
-    alert("Google Maps failed to load.");
-    this.mapError ('Google Maps failed to load.');
-}
+// function googlemapError() {
+//     alert("Google Maps failed to load.");
+//     this.mapError ('Google Maps failed to load.');
+// }
 
 
 

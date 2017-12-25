@@ -77,9 +77,6 @@ body {
 	width: 20rem;
 	justify-content: space-around;
 }
-.menu-sidebar li {
-	padding: 18px 22px 0;
-}
 .menu-sidebar li > a {
 	color: #f3f3f3;
 	font-size: 1.18em;
