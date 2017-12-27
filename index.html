@@ -14,13 +14,6 @@
     <link rel="stylesheet" href="src/CSS/style2.css">
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.8.0/jasmine_favicon.png">
-    <link rel="stylesheet" href="lib/jasmine-2.8.0/jasmine.css">
-
-    <script src="lib/jasmine-2.8.0/jasmine.js"></script>
-    <script src="lib/jasmine-2.8.0/jasmine-html.js"></script>
-    <script src="lib/jasmine-2.8.0/boot.js"></script>
-
 </head>
 
 <body>
@@ -36,18 +29,28 @@
                     <h1>Google Map</h1>
 
                     <div id="request-add">
+                        <!-- 阻止form默认的提交事件 -->
                         <form class="form-wrapper cf" v-on:submit.prevent>
                             <input v-model="location" type="text" placeholder="Search here..." required>
+                            <!-- 将输入的地点信息传入 requestMade 类中的 location 属性 -->
                             <input v-model="type" type="text" placeholder="Search here..." required>
+                            <!-- 将输入的类型信息传入 requestMade 类中的 type 属性 -->
                             <button type="submit" v-on:click="getData">Search</button>
+                            <!-- 点击按钮时，调用 getData 方法 -->
                         </form>
                     </div>
                     <div id="mapData-present">
                         <transition name="slide-fade">
+                            <!-- 数据变动时，调用 slide 相关动画类 -->
                             <ul class="form-wrapper" v-if="inputStatus">
+                                <!-- 如果 listview 类中的 inputStatus 为 false 时，默认不显示该列表 -->
                                 <transition-group name="list" tag="p">
+                                    <!-- 数据变动时，调用 list 相关动画类 -->
                                     <li v-for="(value,index) in elements" v-bind:key="value" class="listView">
-                                        <p v-on:click="clicked(index)">{{value}}</p>
+                                        <!-- 将 listview 类中的 element 数组用 v-for 方法循环呈现在HTML中 -->
+                                        <p v-on:click="clicked(index)">{{value}}
+                                            <!-- 点击时，调用 listview 类中的 clicked 方法，并传入当前项的 index（序号） -->
+                                        </p>
                                     </li>
                                 </transition-group>
                             </ul>
@@ -61,16 +64,10 @@
     </div>
 
     <script src="src/Javascript/vue.js"></script>
-    <script src="src/Javascript/knockout-3.4.1.js"></script>
     <script src="src/Javascript/app.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyApmoY54_QVp80zMhBn6K9phNui_6SbpL0&v=3&callback=initMap"
         onerror="googlemapError()">
     </script>
-    <!-- include source files here... -->
-    <script src="src/Javascript/app.js"></script>
-
-    <!-- include spec files here... -->
-    <script src="spec/app-test.js"></script>
 </body>
 
 </html>
