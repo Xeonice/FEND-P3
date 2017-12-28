@@ -29,7 +29,7 @@ function initMap() {
     var requestMade = new Vue({
         el: '#request-add',//监听 id 为 request-add 的 div
         data: {
-            location: 'pyrmont',
+            location: '',
             type: ''
         },
         methods: {

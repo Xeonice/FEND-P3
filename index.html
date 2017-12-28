@@ -31,9 +31,9 @@
                     <div id="request-add">
                         <!-- 阻止form默认的提交事件 -->
                         <form class="form-wrapper cf" v-on:submit.prevent>
-                            <input v-model="location" type="text" placeholder="Search here..." required>
+                            <input v-model="location" type="text" placeholder="请输入目标城市地点" required>
                             <!-- 将输入的地点信息传入 requestMade 类中的 location 属性 -->
-                            <input v-model="type" type="text" placeholder="Search here..." required>
+                            <input v-model="type" type="text" placeholder="目标地点类型" required>
                             <!-- 将输入的类型信息传入 requestMade 类中的 type 属性 -->
                             <button type="submit" v-on:click="getData">Search</button>
                             <!-- 点击按钮时，调用 getData 方法 -->
