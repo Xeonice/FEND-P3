@@ -1,39 +1,51 @@
-a {
-	text-decoration: none;
+body {
+	margin: 0;
+	padding: 0;
+	background: #494A5F;
+	font-weight: 500;
+	font-family: "Microsoft YaHei", "宋体", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif, FreeSans, Arimo;
 }
+
+a {
+	color: #ccc;
+}
+
 ul {
 	padding-left: 0;
 }
+
 li {
 	list-style: none;
 }
+
 * {
 	box-sizing: border-box;
 }
+
 h1 {
 	color: #ffffff;
 }
-body {
-	font-family: 'Montserrat', Arial, serif;
-	font-size: 14px;
-}
+
 @font-face {
-	font-family: 'iconfont';  /* project id 406973 */
+	font-family: 'iconfont';
+	/* project id 406973 */
 	src: url('//at.alicdn.com/t/font_406973_1z0xyg7l91thuxr.eot');
-	src: url('//at.alicdn.com/t/font_406973_1z0xyg7l91thuxr.eot?#iefix') format('embedded-opentype'),
-	url('//at.alicdn.com/t/font_406973_1z0xyg7l91thuxr.woff') format('woff'),
-	url('//at.alicdn.com/t/font_406973_1z0xyg7l91thuxr.ttf') format('truetype'),
-	url('//at.alicdn.com/t/font_406973_1z0xyg7l91thuxr.svg#iconfont') format('svg');
+	src: url('//at.alicdn.com/t/font_406973_1z0xyg7l91thuxr.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_406973_1z0xyg7l91thuxr.woff') format('woff'), url('//at.alicdn.com/t/font_406973_1z0xyg7l91thuxr.ttf') format('truetype'), url('//at.alicdn.com/t/font_406973_1z0xyg7l91thuxr.svg#iconfont') format('svg');
 }
-.iconfont{
-	font-family:"iconfont" !important;
-	font-size:26px;font-style:normal;
+
+.iconfont {
+	font-family: "iconfont" !important;
+	font-size: 26px;
+	font-style: normal;
 	-webkit-font-smoothing: antialiased;
 	-webkit-text-stroke-width: 0.2px;
 	-moz-osx-font-smoothing: grayscale;
 	color: #ffffff;
 }
+
+
 /*高亮部分*/
+
 ::selection {
 	background-color: #EBEBF2;
 	color: #83828D;
@@ -41,11 +53,13 @@ body {
 
 
 /* ==================================== */
+
+
 /*		  	  Navigaton Menu		
 /* ==================================== */
 
 .menu-wrap {
-	background-color: #6968AB;
+	background: #555 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAB9JREFUeNpi/P//PwM6YGLAAuCCmpqacC2MRGsHCDAA+fIHfeQbO8kAAAAASUVORK5CYII=);
 	position: fixed;
 	top: 0;
 	height: 100%;
@@ -58,34 +72,34 @@ body {
 	z-index: 10;
 	display: flex;
 }
+
 .menu-show {
 	margin-left: 0;
 	box-shadow: 4px 2px 15px 1px #B9ADAD;
 }
+
 .menu-sidebar {
 	position: relative;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	justify-content: center;
 	width: 20rem;
-	padding-top: 18rem;
-	padding-bottom: 3rem;
+	padding-top: 8rem;
 }
-.search{
+
+.search {
 	display: flex;
 	width: 20rem;
 	justify-content: space-around;
 }
-.menu-sidebar li {
-	padding: 18px 22px 0;
-}
-.menu-sidebar li > a {
+
+.menu-sidebar li>a {
 	color: #f3f3f3;
 	font-size: 1.18em;
 	position: relative;
 }
-.menu-sidebar li > a::after {
+
+.menu-sidebar li>a::after {
 	content: "";
 	display: block;
 	height: 0.15em;
@@ -98,12 +112,207 @@ body {
 	transition: background-position .2s .1s ease-out;
 	background-size: 200% auto;
 }
-.menu-sidebar li > a:hover::after {
+
+.menu-sidebar li>a:hover::after {
 	background-position: -100% 0;
+}
+
+#mapData-present {
+	margin-top: 30px;
+	color: aliceblue;
+}
+
+/* 必需 */
+
+.expand-transition {
+	transition: all .3s ease;
+	height: 30px;
+	padding: 10px;
+	background-color: #eee;
+	overflow: hidden;
+}
+
+
+/* .expand-enter 定义进入的开始状态 */
+
+
+/* .expand-leave 定义离开的结束状态 */
+
+.expand-enter,
+.expand-leave {
+	height: 0;
+	padding: 0 10px;
+	opacity: 0;
+}
+
+/* ===================================
+			 serach bar
+   =================================== */
+
+
+/*-------------------------------------*/
+
+.cf:before,
+.cf:after {
+	content: "";
+	display: table;
+}
+
+.cf:after {
+	clear: both;
+}
+
+.cf {
+	zoom: 1;
+}
+
+
+/*-------------------------------------*/
+
+.form-wrapper {
+	width: 270px;
+	padding: 15px;
+	background: #444;
+	background: rgba(0, 0, 0, .2);
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .4) inset, 0 1px 0 rgba(255, 255, 255, .2);
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .4) inset, 0 1px 0 rgba(255, 255, 255, .2);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .4) inset, 0 1px 0 rgba(255, 255, 255, .2);
+}
+
+.form-wrapper input {
+	width: 240px;
+	height: 40px;
+	padding: 10px 5px;
+	float: left;
+	font: bold 15px 'lucida sans', 'trebuchet MS', 'Tahoma';
+	border: 0;
+	background: #eee;
+	-moz-border-radius: 3px 0 0 3px;
+	-webkit-border-radius: 3px 0 0 3px;
+	border-radius: 3px 0 0 3px;
+}
+
+.form-wrapper input:focus {
+	outline: 0;
+	background: #fff;
+	-moz-box-shadow: 0 0 2px rgba(0, 0, 0, .8) inset;
+	-webkit-box-shadow: 0 0 2px rgba(0, 0, 0, .8) inset;
+	box-shadow: 0 0 2px rgba(0, 0, 0, .8) inset;
+}
+
+.form-wrapper input::-webkit-input-placeholder {
+	color: #999;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.form-wrapper input:-moz-placeholder {
+	color: #999;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.form-wrapper input:-ms-input-placeholder {
+	color: #999;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.form-wrapper button {
+	overflow: visible;
+	position: relative;
+	float: right;
+	border: 0;
+	padding: 0;
+	margin-top: 10px;
+	cursor: pointer;
+	height: 40px;
+	width: 110px;
+	font: bold 15px/40px 'lucida sans', 'trebuchet MS', 'Tahoma';
+	color: #fff;
+	text-transform: uppercase;
+	background: #d83c3c;
+	-moz-border-radius: 0 3px 3px 0;
+	-webkit-border-radius: 0 3px 3px 0;
+	border-radius: 0 3px 3px 0;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
+}
+
+.form-wrapper button:hover {
+	background: #e54040;
+}
+
+.form-wrapper button:active,
+.form-wrapper button:focus {
+	background: #c42f2f;
+}
+
+.form-wrapper button:before {
+	content: '';
+	position: absolute;
+	border-width: 8px 8px 8px 0;
+	border-style: solid solid solid none;
+	border-color: transparent #d83c3c transparent;
+	top: 12px;
+	left: -6px;
+}
+
+.form-wrapper button:hover:before {
+	border-right-color: #e54040;
+}
+
+.form-wrapper button:focus:before {
+	border-right-color: #c42f2f;
+}
+
+.form-wrapper button::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+
+.form-wrapper input:nth-child(2) {
+	margin-top: 10px;
+	width: 130px;
+}
+
+.byline p {
+	text-align: center;
+	color: #c6c6c6;
+	font: bold 18px Arial, Helvetica, Sans-serif;
+	text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.byline p a {
+	color: #d83c3c;
+	text-decoration: none;
+}
+
+.listView p {
+	color: #999;
+}
+
+.listView p:hover {
+	color: #01a5e2;
+	cursor: pointer;
+}
+
+.listView p:hover::before {
+	content: "";
+	position: absolute;
+	background: #01a5e2;
+	width: 5px;
+	height: 24px;
+	display: block;
+	left: 16px
+	/* margin-top: 6px; */
 }
 
 
 /*Hamburger Button*/
+
 .toggle-button {
 	position: fixed;
 	width: 44px;
@@ -114,20 +323,24 @@ body {
 	transition: .25s;
 	z-index: 15;
 }
+
 .toggle-button:hover {
 	cursor: pointer;
 }
+
 .toggle-button .menu-bar {
 	position: absolute;
 	border-radius: 2px;
 	width: 80%;
 	transition: .5s;
 }
+
 .toggle-button .menu-bar-top {
 	border: 4px solid #555;
 	border-bottom: none;
 	top: 0;
 }
+
 .toggle-button .menu-bar-middle {
 	height: 4px;
 	background-color: #555;
@@ -135,28 +348,80 @@ body {
 	margin-bottom: 7px;
 	top: 4px;
 }
+
 .toggle-button .menu-bar-bottom {
 	border: 4px solid #555;
 	border-top: none;
 	top: 22px;
 }
+
 .button-open {
 	left: 25px;
 }
+
 .button-open .menu-bar-top {
 	border-color: #fff;
 	transform: rotate(45deg) translate(8px, 8px);
 	transition: .5s;
 }
+
 .button-open .menu-bar-middle {
 	background-color: #fff;
 	transform: translate(230px);
 	transition: .1s ease-in;
 	opacity: 0;
 }
+
 .button-open .menu-bar-bottom {
 	border-color: #fff;
 	transform: rotate(-45deg) translate(7px, -7px);
 	transition: .5s;
 }
 
+/*==================================*/
+/*===============动画================*/
+/*==================================*/
+
+/* 进入和离开动画可以分别 */
+
+
+/* 设置不同的持续时间(duration)和动画函数(timing function) */
+
+.slide-fade-enter-active {
+	transition: all .3s ease;
+}
+
+.slide-fade-leave-active {
+	transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to
+
+/* .slide-fade-leave-active 在低于 2.1.8 版本中 */
+
+{
+	transform: translateX(10px);
+	opacity: 0;
+}
+
+
+/* 列表 */
+.list-item {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.list-enter-active,
+.list-leave-active {
+	transition: all 1s;
+}
+
+.list-enter,
+.list-leave-to
+/* .list-leave-active for below version 2.1.8 */
+
+{
+	opacity: 0;
+	transform: translateY(30px);
+}

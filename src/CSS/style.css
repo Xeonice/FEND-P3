@@ -58,6 +58,7 @@ html, body, .page {
     height: 100%;
 }
 
+
 @media screen and (max-width: 500px) {
     .page {
         flex-direction: column;
